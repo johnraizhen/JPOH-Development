@@ -29,8 +29,7 @@ init python:
     # This array variable stores different kinds of splash messages you can use
     # to show to the player on startup.
     splash_messages = [
-        "Please support Doki Doki Literature Club.",
-        "Monika is watching you code."
+        "Please support Doki Doki Literature Club."
     ]
 
     ### New in 3.0.0
@@ -63,7 +62,7 @@ image splash_warning = ParameterizedText(style="splash_text", xalign=0.5, yalign
 
 # This image shows the DDLC logo in the normal DDLC position.
 image menu_logo:
-    "/mod_assets/DDLCModTemplateLogo.png"
+    "mod_assets/johnlogo.png"
     # im.Composite((512, 512), (0, 0), recolorize("mod_assets/logo_bg.png"), (0, 0), "mod_assets/logo_fg.png")
     subpixel True
     xcenter 240
@@ -75,14 +74,14 @@ image menu_logo:
 image menu_bg:
     topleft
     "gui/menu_bg.png"
-    # recolorize("gui/menu_bg.png", "#ffdbf0", "#fff", 1)
+    recolorize("gui/menu_bg.png", "#868686", "#fff", 1)
     menu_bg_move
 
 # This image shows the pause menu polka-dot image.
 image game_menu_bg:
     topleft
     "gui/menu_bg.png"
-    # recolorize("gui/menu_bg.png", "#ffdbf0", "#fff", 1)
+    recolorize("gui/menu_bg.png", "#868686", "#fff", 1)
     menu_bg_loop
 
 # This image transform shows the white fading effect in the main menu.
@@ -94,32 +93,32 @@ image menu_fade:
 image menu_art_y:
     subpixel True
     "gui/menu_art_y.png"
-    xcenter 600
-    ycenter 335
+    xcenter 2000
+    ycenter 1500
     zoom 0.60
     menu_art_move(0.54, 600, 0.60)
 
 image menu_art_n:
     subpixel True
     "gui/menu_art_n.png"
-    xcenter 750
-    ycenter 385
+    xcenter 2000
+    ycenter 1500
     zoom 0.58
     menu_art_move(0.58, 750, 0.58)
 
 image menu_art_s:
     subpixel True
     "gui/menu_art_s.png"
-    xcenter 510
-    ycenter 500
+    xcenter 2000
+    ycenter 1500
     zoom 0.68
     menu_art_move(0.68, 510, 0.68)
 
 image menu_art_m:
     subpixel True
     "gui/menu_art_m.png"
-    xcenter 1000
-    ycenter 640
+    xcenter 2000
+    ycenter 1500
     zoom 1.00
     menu_art_move(1.00, 1000, 1.00)
 
@@ -168,7 +167,7 @@ image menu_art_s_glitch:
 
 # This image shows the main menu screen in the main/pause menu.
 image menu_nav:
-    "gui/overlay/main_menu.png"
+    "mod_assets/gui/overlay/game_menu.png"
     #recolorize("gui/overlay/main_menu.png", "#ffbde1")
     menu_nav_move
 
@@ -252,7 +251,7 @@ image intro:
     truecenter
     "white"
     0.5
-    "bg/splash.png" with Dissolve(0.5, alpha=True)
+    "mod_assets/splash.png" with Dissolve(0.5, alpha=True)
     2.5
     "white" with Dissolve(0.5, alpha=True)
     0.5
@@ -359,7 +358,7 @@ label splashscreen:
         $ quick_menu = False
         scene white
         pause 0.5
-        scene tos
+        scene black
         with Dissolve(1.0)
         pause 1.0
 
@@ -375,17 +374,25 @@ label splashscreen:
         ## unaffiliated with Team Salvato, requires that the player must 
         ## finish DDLC before playing, has spoilers for DDLC, and where to 
         ## get DDLC's files."
-        "[config.name] is a Doki Doki Literature Club fan mod that is not affiliated in anyway with Team Salvato."
-        "It is designed to be played only after the official game has been completed, and contains spoilers for the official game."
-        "Game files for Doki Doki Literature Club are required to play this mod and can be downloaded for free at: https://ddlc.moe or on Steam."
+        "Please note:This DDLC mod is unaffiliated with Team Salvato."
+        $ pause(0.01)
+        show screen tear(20, 0.1, 0.1, 0, 40)
+        play sound "sfx/s_kill_glitch1.ogg"
+        $ pause(0.25)
+        stop sound
+        hide screen tear
+        "johnraizhen" "Greetings. My name is johnraizhen. Thank you for downloading [config.name]."
+        "johnraizhen" "I started the development at 5th anniversary of DDLC, using their inspirations."
+        "johnraizhen" "I want to say that this mod is VERY WORK IN PROGRESS."
+        "johnraizhen" "Some of the aspects are subjected to changed."
 
         menu:
-            "By playing [config.name] you agree that you have completed Doki Doki Literature Club and accept any spoilers contained within."
+            "johnraizhen" "By playing [config.name], you agree that you have completed Doki Doki Literature Club and accept any spoilers contained within."
             "I agree.":
                 pass
 
         $ persistent.first_run = True
-        scene tos2
+        scene white
         with Dissolve(1.5)
         pause 1.0
 
@@ -523,7 +530,7 @@ label splashscreen:
     show white
     $ persistent.ghost_menu = False
     $ splash_message = splash_message_default
-    $ config.main_menu_music = audio.t1
+    $ config.main_menu_music = audio.menu
     $ renpy.music.play(config.main_menu_music)
     show intro with Dissolve(0.5, alpha=True)
     $ pause(2.5)
@@ -677,7 +684,7 @@ label autoload:
 ## This label sets the main menu music to Doki Doki Literature Club before the
 ## menu starts.
 label before_main_menu:
-    $ config.main_menu_music = audio.t1
+    $ config.main_menu_music = audio.menu
     return
 
 ## This label is a left-over from DDLC's development that quits the game but shows
@@ -690,3 +697,4 @@ label quit:
             xpos -100 ypos -100 zoom 3.5
         pause 0.01
     return
+
